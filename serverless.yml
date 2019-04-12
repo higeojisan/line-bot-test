@@ -22,7 +22,7 @@ provider:
   runtime: ruby2.5
   region: ap-northeast-1
   memorySize: 512
-  timeout: 900
+  timeout: 30
 
 
 # you can overwrite defaults here
@@ -64,7 +64,7 @@ functions:
     events:
       - http:
           path: bot/hello
-          method: get
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
