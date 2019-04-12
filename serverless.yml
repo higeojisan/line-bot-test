@@ -20,6 +20,10 @@ service: line-bot-test # NOTE: update this with your service name
 provider:
   name: aws
   runtime: ruby2.5
+  region: ap-northeast-1
+  memorySize: 512
+  timeout: 900
+
 
 # you can overwrite defaults here
 #  stage: dev
@@ -57,6 +61,10 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    events:
+      - http:
+          path: bot/hello
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
