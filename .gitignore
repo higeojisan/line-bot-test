@@ -57,3 +57,4 @@ node_modules
 
 # other
 .envrc
+.ruby-version
