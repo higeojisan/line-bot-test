@@ -23,7 +23,9 @@ provider:
   region: ap-northeast-1
   memorySize: 512
   timeout: 30
-
+  environment:
+    LINE_CHANNEL_SECRET: ${env:LINE_CHANNEL_SECRET}
+    LINE_CHANNEL_TOKEN: ${env:LINE_CHANNEL_TOKEN}
 
 # you can overwrite defaults here
 #  stage: dev
