@@ -4,11 +4,6 @@ require 'json'
 require 'line/bot'
 
 def hello(event:, context:)
-  message = {
-    type: 'text',
-    text: 'hello'
-  }
-
   client = Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
@@ -21,6 +16,10 @@ def hello(event:, context:)
     when Line::Bot::Event::Message
       case req.type
       when Line::Bot::Event::MessageType::Text
+        message = {
+          type: 'text',
+          text: "#{req.message['text']}"
+        }
         response = client.reply_message(req['replyToken'], message)
         p response
       end
