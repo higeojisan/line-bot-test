@@ -10,6 +10,12 @@ def hello(event:, context:)
   }
 
   body = event["body"]
+
+  ## 署名の検証
+  request_header = event["headers"]
+  signature = request_header["X-Line-Signature"]
+  return unless client.validate_signature(body, signature)
+
   requests = client.parse_events_from(body)
   requests.each do |req|
     case req
