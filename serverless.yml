@@ -20,6 +20,9 @@ functions:
           method: post
   pushMessage:
     handler: pushMessage.weather
+    events:
+      - schedule: cron(0 13 * * ? *)
+
 
 package:
   include:
