@@ -5,9 +5,9 @@ require 'line/bot'
 require 'httpclient'
 require 'jsonclient'
 
-def getWeatherInfo()
+def getWeatherInfo(city_id)
   client = JSONClient.new
-  res = client.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010")
+  res = client.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=#{city_id}")
   status = res.status
   body = res.body.to_h
   forecasts = body['forecasts']
@@ -32,7 +32,7 @@ def weather(event:, context:)
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
 
-  weatherInfo = getWeatherInfo()
+  weatherInfo = getWeatherInfo(ENV['CITY_ID'])
 
   message = {
     type: 'text',
