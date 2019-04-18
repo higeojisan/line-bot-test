@@ -9,6 +9,7 @@ provider:
   environment:
     LINE_CHANNEL_SECRET: ${env:LINE_CHANNEL_SECRET}
     LINE_CHANNEL_TOKEN: ${env:LINE_CHANNEL_TOKEN}
+    MY_LINE_USER_ID: ${env:MY_LINE_USER_ID}
 
 functions:
   hello:
@@ -17,10 +18,13 @@ functions:
       - http:
           path: bot/hello
           method: post
+  pushMessage:
+    handler: pushMessage.weather
 
 package:
   include:
     - handler.rb
+    - pushMessage.rb
 
 plugins:
   - serverless-ruby-package
