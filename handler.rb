@@ -19,43 +19,42 @@ def hello(event:, context:)
   requests = client.parse_events_from(body)
   requests.each do |req|
     case req
+
     when Line::Bot::Event::Message
       case req.type
       when Line::Bot::Event::MessageType::Text
-        message = {
-          type: 'text',
-          text: "#{req.message['text']}"
-        }
         case req.message['text']
         when '占い'
           message = bloodTypeFortuneTelling()
-        when 'default'
-          message = bloodTypeFortuneTelling()
-        when 'A'
+        else
           message = {
             type: 'text',
-            text: '最高'
-          }
-        when 'B'
-          message = {
-            type: 'text',
-            text: '普通'
-          }
-        when 'O'
-          message = {
-            type: 'text',
-            text: '最低'
-          }
-        when 'AB'
-          message = {
-            type: 'text',
-            text: 'カス'
+            text: '"占い"って言え'
           }
         end
-        response = client.reply_message(req['replyToken'], message)
-        p response
       end
+    when Line::Bot::Event::Postback
+      postback_data = req['postback']['data']
+      case postback_data
+      when 'default'
+        text = 'ちゃんと選んで'
+      when 'A'
+        text = '最高'
+      when 'B'
+        text = '最低'
+      when 'O'
+        text = '普通'
+      when 'AB'
+        text = '異常'
+      end
+      message = {
+        type: 'text',
+        text: "#{text}"
+      }
     end
+
+    response = client.reply_message(req['replyToken'], message)
+    p response
   end
 end
 
@@ -68,30 +67,30 @@ def bloodTypeFortuneTelling()
         "title": "血液型占い",
         "text": "血液型を選んでね",
         "defaultAction": {
-            "type": "message",
+            "type": "postback",
             "label": "View detail",
-            "text": "default"
+            "data": "default"
         },
         "actions": [
             {
-              "type": "message",
+              "type": "postback",
               "label": "A型",
-              "text": "A"
+              "data": "A"
             },
             {
-              "type": "message",
+              "type": "postback",
               "label": "B型",
-              "text": "B"
+              "data": "B"
             },
             {
-              "type": "message",
+              "type": "postback",
               "label": "O型",
-              "text": "O"
+              "data": "O"
             },
             {
-              "type": "message",
+              "type": "postback",
               "label": "AB型",
-              "text": "AB"
+              "data": "AB"
             }
         ]
     }
