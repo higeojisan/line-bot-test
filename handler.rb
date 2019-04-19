@@ -26,9 +26,49 @@ def hello(event:, context:)
           type: 'text',
           text: "#{req.message['text']}"
         }
+        message = bloodTypeFortuneTelling() if req.message['text'] == '占い'
         response = client.reply_message(req['replyToken'], message)
         p response
       end
     end
   end
+end
+
+def bloodTypeFortuneTelling()
+  message = {
+    "type": "template",
+    "altText": "This is a buttons template",
+    "template": {
+        "type": "buttons",
+        "title": "血液型占い",
+        "text": "血液型を選んでね",
+        "defaultAction": {
+            "type": "message",
+            "label": "View detail",
+            "text": "default"
+        },
+        "actions": [
+            {
+              "type": "message",
+              "label": "A型",
+              "text": "A"
+            },
+            {
+              "type": "message",
+              "label": "B型",
+              "text": "B"
+            },
+            {
+              "type": "message",
+              "label": "O型",
+              "text": "O"
+            },
+            {
+              "type": "message",
+              "label": "AB型",
+              "text": "AB"
+            }
+        ]
+    }
+  }
 end
