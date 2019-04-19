@@ -26,7 +26,32 @@ def hello(event:, context:)
           type: 'text',
           text: "#{req.message['text']}"
         }
-        message = bloodTypeFortuneTelling() if req.message['text'] == '占い'
+        case req.message['text']
+        when '占い'
+          message = bloodTypeFortuneTelling()
+        when 'default'
+          message = bloodTypeFortuneTelling()
+        when 'A'
+          message = {
+            type: 'text',
+            text: '最高'
+          }
+        when 'B'
+          message = {
+            type: 'text',
+            text: '普通'
+          }
+        when 'O'
+          message = {
+            type: 'text',
+            text: '最低'
+          }
+        when 'AB'
+          message = {
+            type: 'text',
+            text: 'カス'
+          }
+        end
         response = client.reply_message(req['replyToken'], message)
         p response
       end
