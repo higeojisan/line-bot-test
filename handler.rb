@@ -2,12 +2,10 @@ load "vendor/bundle/bundler/setup.rb"
 
 require 'json'
 require 'line/bot'
+require 'lib/util'
 
 def hello(event:, context:)
-  client = Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-  }
+  client = create_line_bot_client(ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"])
 
   body = event["body"]
 

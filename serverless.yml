@@ -29,6 +29,7 @@ package:
   include:
     - handler.rb
     - pushMessage.rb
+    - lib/*
 
 plugins:
   - serverless-ruby-package
