@@ -15,7 +15,7 @@ end
 def getWeatherInfo(city_id)
   client = JSONClient.new
   res = client.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=#{city_id}")
-  status = res.status
+  return "情報が取得出来ませんでした" unless res.status == 200
   body = res.body.to_h
   forecasts = body['forecasts']
   result = "明日の天気\n\n"
